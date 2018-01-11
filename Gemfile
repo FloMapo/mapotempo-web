@@ -116,7 +116,7 @@ gem 'bootstrap-select-rails'
 gem 'sanitize'
 gem 'iconv'
 
-gem 'pg'
+gem 'pg', '~> 0.21' # pg 1.0 doesn't support Rails!
 
 gem 'sprockets'
 
@@ -141,7 +141,7 @@ gem 'select2-rails', '= 4.0.0' # FIXME test compatibility with planning sidebar
 gem 'i18n-js'
 gem 'mustache'
 gem 'smt_rails', '0.2.9' # FIXME: JS not working in 0.3.0
-gem 'paloma', github: 'Mapotempo/paloma' # FIXME wait for https://github.com/Mapotempo/paloma/commit/25cbba9f33c7b36f4f4878035ae53541a0036ee9 but paloma not maintained !
+gem 'paloma'
 gem 'browser'
 gem 'color'
 
