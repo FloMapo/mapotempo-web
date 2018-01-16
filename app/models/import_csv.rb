@@ -43,7 +43,9 @@ class ImportCsv
   end
 
   def name
-    ((!file.original_filename.try(&:empty?) && file.original_filename) || (!file.filename.try(&:empty?) && file.filename)).try{ |s|
+    filename = file.is_a?(Hash) ? file[:filename] : ((!file.original_filename.try(&:empty?) && file.original_filename) || (!file.filename.try(&:empty?) && file.filename))
+
+    filename.try{ |s|
       s.split('.')[0..-2].join('.') if s.include?('.')
     }
   end
@@ -114,7 +116,7 @@ class ImportCsv
   def parse_csv
     return false unless file
 
-    contents = File.open(file.tempfile, 'r:bom|utf-8').read
+    contents = File.open(file.is_a?(Hash) ? file[:tempfile] : file.tempfile, 'r:bom|utf-8').read
     unless contents.valid_encoding?
       detection = CharlockHolmes::EncodingDetector.detect(contents)
       if !contents || !detection[:encoding]
