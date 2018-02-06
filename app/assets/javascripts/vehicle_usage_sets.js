@@ -17,9 +17,9 @@
 //
 'use strict';
 
-var vehicle_usage_sets_index = function(params) {
-  'use strict';
+import * as scaffolds from '../../assets/javascripts/scaffolds';
 
+const vehicle_usage_sets_index = function(params) {
   // override accordion collapse bootstrap code
   $('a.accordion-toggle').click(function() {
     var id = $(this).attr('href');
@@ -45,7 +45,7 @@ var vehicle_usage_sets_index = function(params) {
   }
 };
 
-var vehicle_usage_sets_edit = function(params) {
+const vehicle_usage_sets_edit = function(params) {
   $('#vehicle_usage_set_open, #vehicle_usage_set_close, #vehicle_usage_set_rest_start, #vehicle_usage_set_rest_stop, #vehicle_usage_set_rest_duration, #vehicle_usage_set_service_time_start, #vehicle_usage_set_service_time_end, #vehicle_usage_set_work_time').timeEntry({
     show24Hours: true,
     spinnerImage: '',
@@ -53,10 +53,8 @@ var vehicle_usage_sets_edit = function(params) {
   });
 };
 
-var vehicle_usage_sets_import = function(params) {
-  'use strict';
-
-  var dialog_upload = bootstrap_dialog({
+const vehicle_usage_sets_import = function(params) {
+  var dialog_upload = scaffolds.bootstrap_dialog({
     title: I18n.t('vehicle_usage_sets.import.dialog.import.title'),
     icon: 'fa-upload',
     message: SMT['modals/default_with_progress']({
@@ -80,7 +78,7 @@ var vehicle_usage_sets_import = function(params) {
       return false;
     }
 
-    dialog_upload.modal(modal_options());
+    dialog_upload.modal(scaffolds.modal_options());
   });
 };
 

@@ -44,18 +44,6 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 
 SET search_path = public, pg_catalog;
 
---
--- Name: jsonb_to_hstore(json); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION jsonb_to_hstore(json) RETURNS hstore
-    LANGUAGE sql IMMUTABLE STRICT
-    AS $_$
-        SELECT hstore(array_agg(key), array_agg(value))
-        FROM json_each_text($1)
-      $_$;
-
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -106,14 +94,14 @@ CREATE TABLE customers (
     with_state boolean DEFAULT false,
     devices jsonb DEFAULT '{}'::jsonb NOT NULL,
     optimization_force_start boolean DEFAULT false NOT NULL,
-    optimization_max_split_size integer,
     max_plannings integer,
     max_zonings integer,
     max_destinations integer,
     max_vehicle_usage_sets integer,
+    optimization_max_split_size integer,
+    print_barcode character varying,
     enable_sms boolean DEFAULT false NOT NULL,
-    sms_template character varying,
-    print_barcode character varying
+    sms_template character varying
 );
 
 
@@ -647,11 +635,11 @@ CREATE TABLE routes (
     geojson_points text[],
     stop_no_path boolean,
     quantities hstore,
+    stop_out_of_work_time boolean,
     lock_version integer DEFAULT 0 NOT NULL,
     visits_duration integer,
     wait_time integer,
-    drive_time integer,
-    stop_out_of_work_time boolean
+    drive_time integer
 );
 
 
@@ -1051,8 +1039,8 @@ CREATE TABLE visits (
     take_over integer,
     open2 integer,
     close2 integer,
-    quantities_operations hstore,
-    priority integer
+    priority integer,
+    quantities_operations hstore
 );
 
 
@@ -2736,6 +2724,7 @@ INSERT INTO schema_migrations (version) VALUES ('20180123141615');
 
 INSERT INTO schema_migrations (version) VALUES ('20180219090520');
 
+INSERT INTO schema_migrations (version) VALUES ('20180223101253');
+
 INSERT INTO schema_migrations (version) VALUES ('20180226094910');
 
-INSERT INTO schema_migrations (version) VALUES ('20180223101253');
